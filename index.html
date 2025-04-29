@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,6 +17,10 @@
             color: #fff;
             padding: 10px 0;
             text-align: center;
+        }
+        header img {
+            max-width: 150px;
+            margin: 10px 0;
         }
         nav {
             background: #444;
@@ -128,6 +93,7 @@
 </head>
 <body>
     <header>
+        <img src="images/CV_ResumeExpertMY.png" alt="Resume Expert MY Logo">
         <h1>Resume & Cover Letter Services</h1>
         <p>Professional, ATS-Optimized Resumes and Cover Letters</p>
     </header>
@@ -147,22 +113,22 @@
             <div class="service-box">
                 <h3>Basic Resume - $50</h3>
                 <p>A professionally written resume tailored to your job role.</p>
-                <a href="YOUR_TOYYIBPAY_LINK_HERE" class="btn">Order Now</a>
+                <a href="https://toyyibpay.com/basic-resume-50" class="btn">Order Now</a>
             </div>
             <div class="service-box">
                 <h3>Resume + Cover Letter - $80</h3>
                 <p>Includes a resume and a customized cover letter.</p>
-                <a href="YOUR_TOYYIBPAY_LINK_HERE" class="btn">Order Now</a>
+                <a href="https://toyyibpay.com/resume-cover-80" class="btn">Order Now</a>
             </div>
             <div class="service-box">
                 <h3>Premium Package - $120</h3>
                 <p>Resume, cover letter, and LinkedIn profile optimization.</p>
-                <a href="YOUR_TOYYIBPAY_LINK_HERE" class="btn">Order Now</a>
+                <a href="https://toyyibpay.com/premium-120" class="btn">Order Now</a>
             </div>
         </div>
         <div class="section" id="order">
             <h2>Place Your Order</h2>
-            <form action="https://formsubmit.co/your-email@example.com" method="POST">
+            <form action="https://formsubmit.co/yourname@gmail.com" method="POST">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
                 <label for="email">Email</label>
@@ -185,7 +151,7 @@
         </div>
     </div>
     <footer>
-        <p>&copy; 2025 Resume & Cover Letter Services. All rights reserved.</p>
+        <p>© 2025 Resume & Cover Letter Services. All rights reserved.</p>
     </footer>
 </body>
 </html>
